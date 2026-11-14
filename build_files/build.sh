@@ -15,6 +15,15 @@ cp -avf "/ctx/system_files"/. /
 # this installs a package from fedora repos
 dnf5 install -y tmux
 
+# Abilita COPR per audio Chromebook (HP Elite c1030 / jinlon)
+curl -fsSL "https://copr.fedorainfracloud.org/coprs/pvermeer/chromebook-linux-audio/repo/fedora-$(rpm -E %fedora)/pvermeer-chromebook-linux-audio-fedora-$(rpm -E %fedora).repo" \
+    -o /etc/yum.repos.d/pvermeer-chromebook-linux-audio.repo
+
+dnf5 install -y chromebook-linux-audio
+
+# Rimuove il file repo dopo l'installazione per mantenere l'immagine pulita
+rm -f /etc/yum.repos.d/pvermeer-chromebook-linux-audio.repo
+
 # Use a COPR Example:
 #
 # dnf5 -y copr enable ublue-os/staging
@@ -25,3 +34,4 @@ dnf5 install -y tmux
 #### Example for enabling a System Unit File
 
 systemctl enable podman.socket
+
